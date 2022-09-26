@@ -1,5 +1,7 @@
 // convert.cpp: convert modules
 
+#include <arpa/inet.h>
+
 #include "dict.h"
 #include "convert.h"
 #include "python.h"
@@ -30,7 +32,7 @@ inline bool convert_with_glib(gchar *src, GString *dest)
 struct convert_module convert_module_list[] = {
     { "default", 0, NULL,        convert_with_glib,   NULL        },
     { "python",  1, init_python, convert_with_python, fini_python },
-    { "lua",     1, init_lua,    convert_with_lua,    fini_lua    },
+    // { "lua",     1, init_lua,    convert_with_lua,    fini_lua    },
     { NULL,      0, NULL,        NULL,                NULL        },
 };
 
@@ -48,7 +50,7 @@ struct convert_module *mdk_get_convert_module(const char *name)
 void convert_with_module(struct convert_module *mod,
                          gchar *src, GString *dest)
 {
-    guint32 data_size, sec_size;
+    size_t data_size, sec_size;
 
     data_size = get_uint32(src);
     src += sizeof(guint32);
@@ -174,4 +176,3 @@ void mdk_convert_index_with_module(struct convert_module *mod,
 
     g_string_append(dest, "\n</d:entry>\n\n");
 }
-

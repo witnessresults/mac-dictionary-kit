@@ -14,7 +14,7 @@ mdk_index::~mdk_index()
 	g_free(entry_buffer);
 }
 
-guint32 mdk_index::entry_count()
+size_t mdk_index::entry_count()
 {
     return entry_list.size();
 }
@@ -46,10 +46,7 @@ bool mdk_index::load(const gchar *file, guint32 entry_count, guint32 fsize)
         fclose(in);
     }
 
-	if (len < 0)
-		return false;
-
-	if (len != fsize)
+	if (len == 0 || len != fsize)
 		return false;
 
 	entry_list.resize(entry_count);
@@ -86,4 +83,3 @@ bool mdk_index::get_entry(guint32 index, mdk_entry *entry)
 
     return true;
 }
-

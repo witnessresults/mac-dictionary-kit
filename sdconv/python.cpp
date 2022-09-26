@@ -1,7 +1,7 @@
 // python.cpp
 
 #include <libgen.h>
-#include <python2.5/Python.h>
+#include <python2.7/Python.h>
 #include "python.h"
 
 PyObject *py_transform_func;
@@ -12,8 +12,8 @@ static char *copy_module_name_from_file(const char *file)
     if (! module)
         return NULL;
 
-    int len = strlen(module);
-    int i;
+    size_t len = strlen(module);
+    size_t i;
 
     for (i = len - 1; i >= 0; i--)
         if (module[i] == '.')
